@@ -1,4 +1,4 @@
-import jwt,datetime
+import jwt,datetime,json
 
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
@@ -29,6 +29,10 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email,first_name,last_name,password,**extras)
 
+
+def myconverter(o):
+    if isinstance(o, datetime.datetime):
+        return o.__str__()
 
 
 
@@ -66,10 +70,11 @@ class CustomUser(AbstractBaseUser):
         try:
             payload = {
                 "ias":datetime.datetime.utcnow(),
-                "exp":datetime.datetime.utcnow()+datetime.timedelta(minutes=1),
+                "exp":datetime.datetime.utcnow()+datetime.timedelta(minutes=5),
                 "sub":int(user_id)
             }
-            return jwt.encode(payload,"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90",algorithm="HS256")
+            data = json.dumps(payload,default=myconverter)    
+            return jwt.encode(json.loads(data),"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90",algorithm="HS256")
 
         except Exception as e:
             return e
