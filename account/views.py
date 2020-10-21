@@ -3,11 +3,8 @@ from django.contrib.auth import get_user_model,authenticate
 from rest_framework.views import  APIView
 from rest_framework.response import Response
 from rest_framework import permissions,status
-from cryptography.fernet import Fernet
-
 
 from .serializers import UserSerializer,BuyerDetailSerializer
-from .auth_backends import token_expire_handler,expires_in
 from .models import BuyerDetail
 
 User = get_user_model()

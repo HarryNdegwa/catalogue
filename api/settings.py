@@ -74,7 +74,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         
     #    'rest_framework.authentication.TokenAuthentication',
-    'account.auth_backends.ExpiringTokenAuthentication',
+    'account.auth_backends.TokenAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS':'shop.pagination.CustomCursorPagination',
     'PAGE_SIZE':8,
