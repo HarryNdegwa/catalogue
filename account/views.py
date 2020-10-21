@@ -17,6 +17,8 @@ class SignInView(APIView):
 
     permission_classes = (permissions.AllowAny,)
 
+    authentication_classes = ()
+
 
     def post(self,request,format=None):
 
@@ -25,7 +27,7 @@ class SignInView(APIView):
         user = authenticate(email=data.get("email",None),password=data.get("password",None))
 
         if not user:
-            return Response({'detail': 'Invalid Credentials or activate account'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'detail': 'Invalid Credentials'}, status=status.HTTP_404_NOT_FOUND)
 
         token = user.encode_auth_token(user.id)
 
@@ -33,7 +35,6 @@ class SignInView(APIView):
 
         return Response({
             'user': user_serialized.data, 
-            'expires_in': expires_in(token),
             'token': token
         }, status=status.HTTP_200_OK)
 
