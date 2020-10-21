@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
-from rest_framework.authentication import BaseAuthentication
+from django.contrib.auth.backends import BaseBackend
 from rest_framework.exceptions import AuthenticationFailed
 
 User = get_user_model()
 
 
-class TokenAuthentication(BaseAuthentication):
+class TokenAuthentication(BaseBackend):
 
     def authenticate(self, request,token=None):
         auth_header = request.headers["Authorization"]
@@ -18,37 +18,21 @@ class TokenAuthentication(BaseAuthentication):
                     return res
                 else:
                     raise AuthenticationFailed(res)
-            except Exception as e:
-                print(e)
+            except:
                 raise AuthenticationFailed("Invalid Token")
         else:
             raise AuthenticationFailed("Invalid Token")
 
     
-    def authenticate_credentials(self, token):
-        model = self.get_model()
-        payload = jwt.decode(token, "SECRET_KEY")
-        email = payload['email']
-        userid = payload['id']
-        msg = {'Error': "Token mismatch",'status' :"401"}
+    def get_user(self,user_id):
         try:
-            
-            user = User.objects.get(
-                email=email,
-                id=userid,
-                is_active=True
-            )
-            
-            if not user.token['token'] == token:
-                raise exceptions.AuthenticationFailed(msg)
-               
-        except jwt.ExpiredSignature or jwt.DecodeError or jwt.InvalidTokenError:
-            return HttpResponse({'Error': "Token is invalid"}, status="403")
+            user = User.objects.get(id=user_id)
+            return user
         except User.DoesNotExist:
-            return HttpResponse({'Error': "Internal server error"}, status="500")
+            return None
 
-        return (user, token)
 
-    def authenticate_header(self, request):
-        return 'Token'
+    def authenticate_header(self,request):
+        return "Token"
+        
 

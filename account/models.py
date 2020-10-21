@@ -68,9 +68,9 @@ class CustomUser(AbstractBaseUser):
 
     def encode_auth_token(self,user_id):
         try:
-            payload = {
-                "ias":datetime.datetime.utcnow(),
+            payload = {        
                 "exp":datetime.datetime.utcnow()+datetime.timedelta(minutes=5),
+                "iat":datetime.datetime.utcnow(),
                 "sub":int(user_id)
             }
             data = json.dumps(payload,default=myconverter)    

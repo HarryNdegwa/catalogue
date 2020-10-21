@@ -32,7 +32,7 @@ class SignInView(APIView):
 
         return Response({
             'user': user_serialized.data, 
-            'token': token
+            'token': token.decode()
         }, status=status.HTTP_200_OK)
 
 
