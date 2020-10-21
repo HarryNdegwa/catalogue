@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model,authenticate
 from rest_framework.views import  APIView
 from rest_framework.response import Response
 from rest_framework import permissions,status
-from rest_framework.authtoken.models import Token
 from cryptography.fernet import Fernet
 
 
@@ -28,16 +27,14 @@ class SignInView(APIView):
         if not user:
             return Response({'detail': 'Invalid Credentials or activate account'}, status=status.HTTP_404_NOT_FOUND)
 
-        token,_ = Token.objects.get_or_create(user=user)
-
-        is_expired,token = token_expire_handler(token,user)
+        token = user.encode_auth_token(user.id)
 
         user_serialized = UserSerializer(user)
 
         return Response({
             'user': user_serialized.data, 
             'expires_in': expires_in(token),
-            'token': token.key
+            'token': token
         }, status=status.HTTP_200_OK)
 
 
