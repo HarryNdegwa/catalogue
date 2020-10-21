@@ -74,7 +74,18 @@ class CustomUser(AbstractBaseUser):
         except Exception as e:
             return e
 
-            
+    @staticmethod
+    def decode_auth_token(auth_token):
+        try:
+            payload = jwt.decode(auth_token,"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90")
+            return payload["sub"]
+        except jwt.ExpiredSignatureError:
+            return "Token expired! Please log in again."
+        except  jwt.InvalidTokenError:
+            return "Invalid Token! Please log in again."
+
+
+
 class BuyerDetail(models.Model):
     buyer=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     first_name=models.CharField(max_length=200,null=True)
