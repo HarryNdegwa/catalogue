@@ -33,7 +33,7 @@ class SignInView(APIView):
         response=Response({
             'user': user_serialized.data,           
         }, status=status.HTTP_200_OK)
-        response.set_cookie("id",token.decode())
+        response.set_cookie("id",token.decode(),max_age=86400,httponly=True)
         return response
 
 

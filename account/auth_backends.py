@@ -12,7 +12,8 @@ class TokenAuthentication(BaseAuthentication):
         """
             authenticate the request and return a user and token tuple    
         """
-        auth_header = request.headers.get("Authorization")
+        auth_header = request.COOKIES
+        print(auth_header)
         if auth_header:
             _,token = auth_header.split(" ")
             res = User.decode_auth_token(token)
