@@ -279,6 +279,7 @@ class WishListCreateListView(APIView):
 class GetCartCount(APIView):
 
     def get(self,request,format=None):
+        print(f"Cookies {request.COOKIES}")
         qty=0
         user = User.objects.get(email=request.user)
         cart_items = Cart.objects.filter(buyer=user)
