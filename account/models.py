@@ -69,7 +69,7 @@ class CustomUser(AbstractBaseUser):
     def encode_auth_token(self,user_id):
         try:
             payload = {        
-                "exp":datetime.datetime.utcnow()+datetime.timedelta(days=0,minutes=5),
+                "exp":datetime.datetime.utcnow()+datetime.timedelta(days=0,minutes=1),
                 "iat":datetime.datetime.utcnow(),
                 "sub":int(user_id)
             }
