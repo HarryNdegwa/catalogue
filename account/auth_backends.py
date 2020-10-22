@@ -1,25 +1,23 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import BaseBackend
+from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
 User = get_user_model()
 
 
-class TokenAuthentication(BaseBackend):
+class TokenAuthentication(BaseAuthentication):
 
-    def authenticate(self, request,token=None):
-        auth_header = request.headers["Authorization"]
-        _,token = auth_header.split(" ")
-        if token:
-            try:
-                res = User.decode_auth_token(token)
-                print(f"Res is {res}")
-                if type(res) == int:
-                    return res
-                else:
-                    raise AuthenticationFailed(res)
-            except:
-                raise AuthenticationFailed("Invalid Token")
+    def authenticate(self, request):
+        auth_header = request.headers.get("Authorization")
+        if auth_header:
+            _,token = auth_header.split(" ")
+            res = User.decode_auth_token(token)
+            if type(res) == int:
+                user = User.objects.get(id=res)
+                if user:
+                    return (user,None)
+            else:
+                raise AuthenticationFailed(res)     
         else:
             raise AuthenticationFailed("Invalid Token")
 

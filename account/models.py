@@ -69,12 +69,12 @@ class CustomUser(AbstractBaseUser):
     def encode_auth_token(self,user_id):
         try:
             payload = {        
-                "exp":datetime.datetime.utcnow()+datetime.timedelta(minutes=5),
+                "exp":datetime.datetime.utcnow()+datetime.timedelta(days=0,minutes=5),
                 "iat":datetime.datetime.utcnow(),
                 "sub":int(user_id)
             }
-            data = json.dumps(payload,default=myconverter)    
-            return jwt.encode(json.loads(data),"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90",algorithm="HS256")
+            # data = json.dumps(payload,default=myconverter)    
+            return jwt.encode(payload,"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90",algorithm="HS256")
 
         except Exception as e:
             return e
@@ -82,7 +82,7 @@ class CustomUser(AbstractBaseUser):
     @staticmethod
     def decode_auth_token(auth_token):
         try:
-            payload = jwt.decode(auth_token,"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90")
+            payload = jwt.decode(auth_token,"\xd1\xd7\xee_\xab\xd0UB:\x18\x1bh8\xc8\x90\x0eb+\xc67R\xec^\x90",algorithms=["HS256"])
             return payload["sub"]
         except jwt.ExpiredSignatureError:
             return "Token expired! Please log in again."
