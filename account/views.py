@@ -30,10 +30,11 @@ class SignInView(APIView):
 
         user_serialized = UserSerializer(user)
 
-        return Response({
-            'user': user_serialized.data, 
-            'token': token.decode()
+        response=Response({
+            'user': user_serialized.data,           
         }, status=status.HTTP_200_OK)
+        response.set_cookie("id",token.decode())
+        return response
 
 
 class CreateUserView(APIView):

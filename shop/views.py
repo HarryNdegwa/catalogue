@@ -143,7 +143,6 @@ class DeleteProductImage(APIView):
         except Exception as e:
             print(e)
             product.save()
-        # delete file logic here
         return Response({},status=status.HTTP_200_OK)
 
 
