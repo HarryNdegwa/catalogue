@@ -8,6 +8,10 @@ User = get_user_model()
 class TokenAuthentication(BaseAuthentication):
 
     def authenticate(self, request):
+
+        """
+            authenticate the request and return a user and token tuple    
+        """
         auth_header = request.headers.get("Authorization")
         if auth_header:
             _,token = auth_header.split(" ")

@@ -8,6 +8,7 @@ from rest_framework.generics import *
 from rest_framework.parsers import FileUploadParser
 from django_filters import rest_framework as filters
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import get_user_model
 
 from .serializers import *
 from .models import *
@@ -15,11 +16,25 @@ from .pagination_mixin import PaginationMixin
 from .filters import ProductFilter,CartFilter,OrderFilter
 from account.serializers import UserSerializer
 
+
+User = get_user_model()
+
+
+def is_admin(email):
+    try:
+        user = User.objects.get(email = email)
+        return user.is_admin
+    except User.DoesNotExist:
+        return False
+
+
 class ProductListCreateView(APIView,PaginationMixin):
 
     pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
     permission_classes = []
+
+    authentication_classes = []
 
     def post(self,request,format=None):
         payload = request.data
@@ -46,6 +61,8 @@ class ProductCategoryListView(APIView,PaginationMixin):
 
         permission_classes = []
 
+        authentication_classes = []
+
         def get(self,request,category,format=None):
             category = Category.objects.get(name=category)
             queryset = Product.objects.filter(category=category)
@@ -60,6 +77,8 @@ class ProductFetchRelated(APIView):
 
     permission_classes = []
 
+    authentication_classes = []
+
     def get(self,request,slug,format=None):
         category = Product.objects.get(slug=slug).category
         related_products = Product.objects.filter(category=category).exclude(slug=slug)
@@ -69,9 +88,11 @@ class ProductFetchRelated(APIView):
 
 
 
-class ProductRetrieveUpdateDestroyView(APIView):
+class ProductRetrieveView(APIView):
 
     permission_classes = []
+
+    authentication_classes = []
 
     def get_product(self,slug):
         try:
@@ -87,17 +108,25 @@ class ProductRetrieveUpdateDestroyView(APIView):
             return Response(serialized_product.data,status=status.HTTP_200_OK)
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    
+
+
+class ProductUpdateDestroyView(APIView):
+
     def put(self,request,id,format=None):
-        product = Product.objects.get(id=id)
-        if request.data.get("type") == "deal":
-            data = request.data
-            data["hot_deal"] = True
-            serialized_product = ProductSerializer(instance=product,data=data,partial=True)
-        else: 
-            serialized_product = ProductSerializer(instance=product,data=request.data,partial=True)
-        serialized_product.is_valid(raise_exception=True)
-        serialized_product.save()
-        return Response(serialized_product.data,status=status.HTTP_200_OK)
+        if is_admin(request.user):
+            product = Product.objects.get(id=id)
+            if request.data.get("type") == "deal":
+                data = request.data
+                data["hot_deal"] = True
+                serialized_product = ProductSerializer(instance=product,data=data,partial=True)
+            else: 
+                print("Hellooo")
+                serialized_product = ProductSerializer(instance=product,data=request.data,partial=True)
+            serialized_product.is_valid(raise_exception=True)
+            serialized_product.save()
+            return Response(serialized_product.data,status=status.HTTP_200_OK)
+        return Response({},status=status.HTTP_403_FORBIDDEN)
 
 
 class DeleteProductImage(APIView):
@@ -160,6 +189,9 @@ class CartListCreateView(APIView,PaginationMixin):
             return Response(status=status.HTTP_201_CREATED)
 
     def get(self,request,format=None):
+        print(dir(request))
+        print(request.auth)
+        print(request.user)
         user = User.objects.get(email=request.user)
         cart_items = Cart.objects.filter(buyer=user)
         serialized_items = CartSerializer(cart_items,many=True)

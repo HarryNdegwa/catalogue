@@ -77,7 +77,7 @@ class ProductSerializer(serializers.ModelSerializer):
                 instance.slug = validated_data.get("slug",instance.slug)
                 instance.save()
                 return instance
-            except KeyError:
+            except KeyError: 
                 instance.description = validated_data.get("description",instance.description)
                 instance.save()
                 return instance
