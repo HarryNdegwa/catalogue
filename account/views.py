@@ -83,7 +83,7 @@ class FetchUser(APIView):
 
     def get(self,request,format=None):
         user_email = request.user
-        if request.auth:
+        if user_email:
             try:
                 user = User.objects.get(email=user_email)
                 return Response({"is_auth":True,"is_admin":user.is_admin},status=status.HTTP_200_OK)
