@@ -141,7 +141,6 @@ class DeleteProductImage(APIView):
             product.img_urls = ",".join(img_urls)
             product.save()
         except Exception as e:
-            print(e)
             product.save()
         return Response({},status=status.HTTP_200_OK)
 
@@ -334,6 +333,10 @@ class UploadProductImageView(APIView):
 
 class CategoriesView(ListAPIView):
 
+    permission_classes = []
+
+    authentication_classes = []
+
     def get(self,request,format=None):
         sub_categories = SubCategory.objects.all()
         serialized_categories = SubCategorySerializer(sub_categories,many=True)
@@ -344,6 +347,8 @@ class CategoriesView(ListAPIView):
 class DealsView(APIView):
 
     permission_classes = []
+
+    authentication_classes = []
 
     def get(self,request,format=None):
         deal_products = Product.objects.filter(hot_deal = True)
