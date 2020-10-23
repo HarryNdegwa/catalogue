@@ -75,3 +75,11 @@ class UserDetails(APIView):
         serialized_details.is_valid(raise_exception=True)
         serialized_details.save()
         return Response(status=status.HTTP_205_RESET_CONTENT)
+
+
+class LogoutView(APIView):
+
+    def get(self,request,format=None):
+        response = Response({},status=status.HTTP_200_OK)
+        response.delete_cookie("_identity_")
+        return response
