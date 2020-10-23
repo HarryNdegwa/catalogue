@@ -187,9 +187,6 @@ class CartListCreateView(APIView,PaginationMixin):
             return Response(status=status.HTTP_201_CREATED)
 
     def get(self,request,format=None):
-        print(dir(request))
-        print(request.auth)
-        print(request.user)
         user = User.objects.get(email=request.user)
         cart_items = Cart.objects.filter(buyer=user)
         serialized_items = CartSerializer(cart_items,many=True)
