@@ -75,21 +75,3 @@ class UserDetails(APIView):
         serialized_details.is_valid(raise_exception=True)
         serialized_details.save()
         return Response(status=status.HTTP_205_RESET_CONTENT)
-
-
-
-
-class FetchUser(APIView):
-
-    def get(self,request,format=None):
-        user_email = request.user
-        if user_email:
-            try:
-                user = User.objects.get(email=user_email)
-                return Response({"is_auth":True,"is_admin":user.is_admin},status=status.HTTP_200_OK)
-            except:
-                return Response({"is_auth":False,"is_admin":False},status=status.HTTP_401_UNAUTHORIZED)
-        
-        return Response({"is_auth":False,"is_admin":False},status=status.HTTP_401_UNAUTHORIZED)
-
-
