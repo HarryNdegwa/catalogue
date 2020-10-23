@@ -40,6 +40,7 @@ class SignInView(APIView):
 class CreateUserView(APIView):
 
     permission_classes = (permissions.AllowAny,)
+
     authentication_classes = ()
 
     def post(self,request,format=None):
@@ -47,9 +48,7 @@ class CreateUserView(APIView):
         serialized_data = UserSerializer(data=user_payload)
         serialized_data.is_valid(raise_exception=True)
         serialized_data.save()
-        user = User.objects.get(email=user_payload.get("email",None))
-        token = Token.objects.get(user=user)
-        return Response({"token":token.key},status=status.HTTP_201_CREATED)
+        return Response({},status=status.HTTP_201_CREATED)
 
 
 class UpdateUserView(RetrieveUpdateAPIView):
