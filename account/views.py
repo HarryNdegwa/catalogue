@@ -76,6 +76,16 @@ class UserDetails(APIView):
         return Response(status=status.HTTP_205_RESET_CONTENT)
 
 
+class CurrentUser(APIView):
+
+    def get(self,request,format=None):
+        email = request.user
+        if email:
+            user = User.objects.get(email=email)
+            return Response({"level":lambda user:2 if user.is_admin else 1},status=status.HTTP_200_OK)
+        return Response({},status=status.HTTP_401_UNAUTHORIZED)
+
+
 class LogoutView(APIView):
 
     def get(self,request,format=None):
