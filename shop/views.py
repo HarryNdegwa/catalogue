@@ -121,7 +121,6 @@ class ProductUpdateDestroyView(APIView):
                 data["hot_deal"] = True
                 serialized_product = ProductSerializer(instance=product,data=data,partial=True)
             else: 
-                print("Hellooo")
                 serialized_product = ProductSerializer(instance=product,data=request.data,partial=True)
             serialized_product.is_valid(raise_exception=True)
             serialized_product.save()
