@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
 
+from .models import Maintenance
+
 
 class ComingSoonMiddleware(object):
 
@@ -14,4 +16,7 @@ class ComingSoonMiddleware(object):
 
 
     def process_view(self,request,view_func,view_args,view_kwargs):
-        return Response({},status=status.HTTP_200_OK)
+        under_maintenance = Maintenance.objects.all().filter(maintained=True)
+        if under_maintenance:
+            return Response({"maintenance":True},status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        return 
