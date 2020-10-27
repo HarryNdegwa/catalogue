@@ -111,3 +111,9 @@ class BuyerDetail(models.Model):
         super().save(*args,**kwargs)
     
 
+
+class Maintenance(models.Model):
+    maintained=models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.maintained
