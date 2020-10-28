@@ -40,8 +40,5 @@ class CurrencyMiddleware(object):
         else:
             currency_value = currencies["KE"]
         response = self.get_response(request)
-        if isinstance(response,Response):
-            response.data["cur"] = currency_value
-            response._is_rendered = False
-            response.render()
+        response["CURRENCY"] = currency_value       
         return response
