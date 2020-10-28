@@ -30,13 +30,6 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email,first_name,last_name,password,**extras)
 
 
-def myconverter(o):
-    if isinstance(o, datetime.datetime):
-        return o.__str__()
-
-
-
-
 class CustomUser(AbstractBaseUser):
     email = models.CharField(max_length=255,unique=True,null=True)
 
