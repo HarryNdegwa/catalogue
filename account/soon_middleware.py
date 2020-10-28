@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -11,12 +12,8 @@ class ComingSoonMiddleware(object):
 
 
     def __call__(self,request):
-        response = self.get_response(request)
-        return response
-
-
-    def process_view(self,request,view_func,view_args,view_kwargs):
         under_maintenance = Maintenance.objects.all().filter(maintained=True)
-        if under_maintenance:
-            return Response({"maintenance":True},status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        return 
+        path = request.get_full_path()
+        if under_maintenance and path != "/admin/":
+            return JsonResponse({"maintenance":True})
+        return self.get_response(request)
