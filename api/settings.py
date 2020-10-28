@@ -10,8 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-# d7ae9b537538a3c447355eb5d30086f99af8805f
-
 
 import os
 from dotenv import load_dotenv
@@ -47,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_framework.authtoken',
     'django_filters',
     'corsheaders',
 
@@ -57,7 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # be placed at the top before any other middleware
-    'account.soon_middleware.ComingSoonMiddleware',
+    'account.middlewares.ComingSoonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
