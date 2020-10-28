@@ -31,7 +31,7 @@ class CurrencyMiddleware(object):
         self.get_response = get_response
 
     def __call__(self,request):
-        currency = request.headers.get("cur")
+        currency = request.headers.get("CURRENCY")
         if currency:
             try:
                 currency_value = currencies["currency"]
