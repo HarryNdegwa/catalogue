@@ -14,6 +14,6 @@ class ComingSoonMiddleware(object):
     def __call__(self,request):
         under_maintenance = Maintenance.objects.all().filter(maintained=True)
         path = request.get_full_path()
-        if under_maintenance and path != "/admin/":
-            return JsonResponse({"maintenance":True})
+        if under_maintenance and "/admin/" not in path:
+            return JsonResponse({"maintenance":True},status=503)
         return self.get_response(request)
