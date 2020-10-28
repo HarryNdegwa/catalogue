@@ -116,4 +116,4 @@ class Maintenance(models.Model):
     maintained=models.BooleanField(default=False)
 
     def __str__(self):
-        return self.maintained
+        return str(self.maintained)

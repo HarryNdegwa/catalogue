@@ -11,7 +11,7 @@ class ComingSoonMiddleware(object):
 
 
     def __call__(self,request):
-        response = get_response(request)
+        response = self.get_response(request)
         return response
 
 
