@@ -56,8 +56,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'account.soon_middleware.ComingSoonMiddleware',
     'corsheaders.middleware.CorsMiddleware', # be placed at the top before any other middleware
+    'account.soon_middleware.ComingSoonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
