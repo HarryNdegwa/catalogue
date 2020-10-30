@@ -94,7 +94,7 @@ class SimpleProductSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     buyer = UserSerializer()
-    product = ProductSerializer()
+    product = SimpleProductSerializer()
 
     class Meta:
         model=Cart
