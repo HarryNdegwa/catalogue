@@ -95,6 +95,8 @@ CORS_ALLOW_HEADERS = list(default_headers)+[
     'CURRENCY'
 ]
 
+CORS_EXPOSE_HEADERS = ["CURRENCY"]
+
 ROOT_URLCONF = 'api.urls'
 
 TEMPLATES = [
