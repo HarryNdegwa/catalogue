@@ -37,7 +37,10 @@ class CurrencyMiddleware(object):
                 currency_value = currencies[currency]
             except KeyError:
                 currency_value = currencies["KSH"]
-            finally:
+                response = self.get_response(request)
+                response["CURRENCY"] = ("KSH",currency_value)
+                return response
+            else:
                 response = self.get_response(request)
                 response["CURRENCY"] = (currency,currency_value)  
                 return response
