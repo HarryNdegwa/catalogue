@@ -32,7 +32,7 @@ class CurrencyMiddleware(object):
 
     def __call__(self,request):
         currency = request.headers.get("CURRENCY")
-        print(request.headers)
+        print(f"Request headers are {request.headers}")
         if currency:
             try:
                 currency_value = currencies["currency"]
@@ -42,5 +42,5 @@ class CurrencyMiddleware(object):
                 response = self.get_response(request)
                 response["CURRENCY"] = currency_value  
         response = self.get_response(request)
-        print(response._headers)
+        print(f"Response headers are {response._headers}")
         return response
