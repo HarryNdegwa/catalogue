@@ -83,6 +83,14 @@ class ProductSerializer(serializers.ModelSerializer):
                 return instance
 
 
+class SimpleProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Product
+        fields=["name","price","prev_price","hot_deal","deal_price","img_urls","slug"]
+
+
+
 
 class CartSerializer(serializers.ModelSerializer):
     buyer = UserSerializer()
