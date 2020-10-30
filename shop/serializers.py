@@ -111,7 +111,7 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class WishListSerializer(serializers.ModelSerializer):
-    product=ProductSerializer()
+    product=SimpleProductSerializer()
     saver=UserSerializer()
 
     class Meta:
