@@ -32,13 +32,15 @@ class CurrencyMiddleware(object):
 
     def __call__(self,request):
         currency = request.headers.get("CURRENCY")
+        print(request.headers)
         if currency:
             try:
                 currency_value = currencies["currency"]
             except KeyError:
                 currency_value = currencies["KE"]
-        else:
-            currency_value = currencies["KE"]
+            finally:
+                response = self.get_response(request)
+                response["CURRENCY"] = currency_value  
         response = self.get_response(request)
-        response["CURRENCY"] = currency_value       
+        print(response._headers)
         return response
