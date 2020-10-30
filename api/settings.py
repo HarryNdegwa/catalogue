@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -89,6 +90,10 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = list(default_headers)+[
+    'CURRENCY'
+]
 
 ROOT_URLCONF = 'api.urls'
 
