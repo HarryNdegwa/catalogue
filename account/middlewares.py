@@ -6,8 +6,8 @@ from .models import Maintenance
 
 
 currencies = {
-    "KE":1,
-    "US":0.00925
+    "KSH":1,
+    "USD":0.00925
 }
 
 
@@ -32,15 +32,15 @@ class CurrencyMiddleware(object):
 
     def __call__(self,request):
         currency = request.headers.get("CURRENCY")
-        print(f"Request headers are {request.headers}")
         if currency:
             try:
-                currency_value = currencies["currency"]
+                currency_value = currencies[currency]
             except KeyError:
-                currency_value = currencies["KE"]
+                currency_value = currencies["KSH"]
             finally:
                 response = self.get_response(request)
-                response["CURRENCY"] = currency_value  
-        response = self.get_response(request)
-        print(f"Response headers are {response._headers}")
-        return response
+                response["CURRENCY"] = (currency,currency_value)  
+                return response
+        else:
+            response = self.get_response(request)
+            return response
