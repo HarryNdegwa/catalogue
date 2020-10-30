@@ -47,9 +47,9 @@ class ProductListCreateView(APIView,PaginationMixin):
     def get(self,request,format=None):
         queryset = Product.objects.filter(published=True)
         page = self.paginate_queryset(queryset)
-        serialized_products = ProductSerializer(page,many=True)
+        serialized_products = SimpleProductSerializer(page,many=True)
         if page is not None:
-            serialized_products = ProductSerializer(page,many=True)
+            serialized_products = SimpleProductSerializer(page,many=True)
             return self.get_paginated_response(serialized_products.data)
         return Response(serialized_products.data,status=status.HTTP_200_OK)
 
@@ -67,7 +67,7 @@ class ProductCategoryListView(APIView,PaginationMixin):
             category = Category.objects.get(name=category)
             queryset = Product.objects.filter(category=category)
             page = self.paginate_queryset(queryset)
-            serialized_products = ProductSerializer(page,many=True)
+            serialized_products = SimpleProductSerializer(page,many=True)
             if page is not None:
                 return self.get_paginated_response(serialized_products.data)
             return Response(serialized_products.data,status=status.HTTP_200_OK)
@@ -82,7 +82,7 @@ class ProductFetchRelated(APIView):
     def get(self,request,slug,format=None):
         category = Product.objects.get(slug=slug).category
         related_products = Product.objects.filter(category=category).exclude(slug=slug)
-        serialized_products = ProductSerializer(related_products,many=True)
+        serialized_products = SimpleProductSerializer(related_products,many=True)
         return Response(serialized_products.data,status=status.HTTP_200_OK)
         
 
