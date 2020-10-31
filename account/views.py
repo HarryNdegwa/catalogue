@@ -34,7 +34,8 @@ class SignInView(APIView):
             'user': user_serialized.data,           
         }, status=status.HTTP_200_OK)
         response.set_cookie("_identity_",token.decode(),max_age=604800,httponly=True)
-        response.set_cookie("lvl",lambda user_serialized:1 if user_serialized.is_admin else 2,max_age=604800)
+        lvl = lambda u:1 if u["is_admin"] else 2
+        response.set_cookie("lvl",lvl(user_serialized),max_age=604800)
         return response
 
 
