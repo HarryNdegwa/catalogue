@@ -92,4 +92,5 @@ class LogoutView(APIView):
     def get(self,request,format=None):
         response = Response({},status=status.HTTP_200_OK)
         response.delete_cookie("_identity_")
+        response.delete_cookie("lvl")
         return response
