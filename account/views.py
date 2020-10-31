@@ -84,7 +84,10 @@ class CurrentUser(APIView):
         if email:
             user = User.objects.get(email=email)
             return Response({"level":lambda user:2 if user.is_admin else 1},status=status.HTTP_200_OK)
-        return Response({},status=status.HTTP_401_UNAUTHORIZED)
+        response = Response({},status=status.HTTP_401_UNAUTHORIZED)
+        response.delete_cookie("_identity_")
+        response.delete_cookie("lvl")
+        return response
 
 
 class LogoutView(APIView):
