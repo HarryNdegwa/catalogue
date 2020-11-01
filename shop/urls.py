@@ -22,5 +22,6 @@ urlpatterns = [
     path("wishlist/",WishListCreateListView.as_view(),name="wishlist"),
     path("wishlist/<int:id>/",WishListCreateListView.as_view(),name="wishlist"),
     path("wishlist/count/",WishListCount.as_view(),name="wishlist_count"),
-    path("deals/",DealsView.as_view(),name="deals")
+    path("deals/",DealsView.as_view(),name="deals"),
+    path("contact/",ContactView.as_view(),name="contact")
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
