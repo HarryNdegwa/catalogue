@@ -353,4 +353,19 @@ class DealsView(APIView):
 
 
 
+class ContactView(APIView):
+
+    permission_classes = []
+
+    authentication_classes = []
+
+    def post(self,request,format=None):
+        contact_payload = request.data
+        serialized_contact = ContactSerializer(contact_payload)
+        serialized_contact.is_valid(raise_exception=True)
+        serialized_contact.save()
+        return Response({},status=status.HTTP_200_OK)
+
+
+
 
