@@ -104,23 +104,6 @@ class ProductImage(models.Model):
         pass
 
 
-
-class Query(models.Model):
-    sender=models.ForeignKey(User,on_delete=models.CASCADE)
-    subject=models.CharField(max_length=255)
-    content=models.TextField()
-    timestamp=models.DateTimeField(auto_now_add=True)
-    status=models.CharField(max_length=20,default="Unread")
-
-
-    def __str__(self):
-        return self.sender.email
-
-
-    class Meta:
-        verbose_name_plural="Queries"
-
-
 class WishList(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     saver=models.ForeignKey(User,on_delete=models.CASCADE)
