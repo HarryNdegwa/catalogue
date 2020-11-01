@@ -135,10 +135,11 @@ class WishList(models.Model):
 
 
 class Contact(models.Model):
-    subject=models.CharField(max_length=200)
+    name=models.CharField(max_length=200)
+    email=models.EmailField(max_length=256)
     message=models.TextField()
 
 
     def __str__(self):
-        return str(self.subject)
+        return str(self.name)
     
