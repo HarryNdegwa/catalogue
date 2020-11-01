@@ -132,4 +132,13 @@ class WishList(models.Model):
     class Meta:
         verbose_name_plural="Wishlists"
 
+
+
+class Contact(models.Model):
+    subject=models.CharField(max_length=200)
+    message=models.TextField()
+
+
+    def __str__(self):
+        return str(self.subject)
     
