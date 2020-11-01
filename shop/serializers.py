@@ -147,6 +147,13 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields=["id","image","product"]
 
 
+class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Contact
+        fields="__all__"
+
+
 
 
 
