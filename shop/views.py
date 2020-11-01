@@ -361,7 +361,7 @@ class ContactView(APIView):
 
     def post(self,request,format=None):
         contact_payload = request.data
-        serialized_contact = ContactSerializer(contact_payload)
+        serialized_contact = ContactSerializer(data=contact_payload)
         serialized_contact.is_valid(raise_exception=True)
         serialized_contact.save()
         return Response({},status=status.HTTP_200_OK)
