@@ -29,7 +29,7 @@ def is_admin(email):
         return False
 
 
-class ProductListCreateView(APIView,PaginationMixin,AdminBrowsableMixin):
+class ProductListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
     pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 

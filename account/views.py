@@ -11,7 +11,7 @@ from .browsable_mixin import AdminBrowsableMixin
 User = get_user_model()
 
 
-class SignInView(APIView,AdminBrowsableMixin):
+class SignInView(AdminBrowsableMixin,APIView):
 
     permission_classes = (permissions.AllowAny,)
 
@@ -40,7 +40,7 @@ class SignInView(APIView,AdminBrowsableMixin):
         return response
 
 
-class CreateUserView(APIView,AdminBrowsableMixin):
+class CreateUserView(AdminBrowsableMixin,APIView):
 
     permission_classes = (permissions.AllowAny,)
 
@@ -54,7 +54,7 @@ class CreateUserView(APIView,AdminBrowsableMixin):
         return Response({},status=status.HTTP_201_CREATED)
 
 
-class UpdateUserView(RetrieveUpdateAPIView,AdminBrowsableMixin):
+class UpdateUserView(RetrieveUpdateAdminBrowsableMixin,APIView):
     serializer_class = UserSerializer
     lookup_field = "id"
     permission_classes = (permissions.IsAuthenticated)
@@ -62,7 +62,7 @@ class UpdateUserView(RetrieveUpdateAPIView,AdminBrowsableMixin):
 
 
 
-class UserDetails(APIView,AdminBrowsableMixin):
+class UserDetails(AdminBrowsableMixin,APIView):
 
     # permission_classe = []
 
@@ -85,7 +85,7 @@ class UserDetails(APIView,AdminBrowsableMixin):
         return Response(status=status.HTTP_205_RESET_CONTENT)
 
 
-class CurrentUser(APIView,AdminBrowsableMixin):
+class CurrentUser(AdminBrowsableMixin,APIView):
     
 
     def get(self,request,format=None):
@@ -99,7 +99,7 @@ class CurrentUser(APIView,AdminBrowsableMixin):
         return response
 
 
-class LogoutView(APIView,AdminBrowsableMixin):
+class LogoutView(AdminBrowsableMixin,APIView):
 
     def get(self,request,format=None):
         response = Response({},status=status.HTTP_200_OK)
