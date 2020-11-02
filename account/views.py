@@ -54,7 +54,7 @@ class CreateUserView(AdminBrowsableMixin,APIView):
         return Response({},status=status.HTTP_201_CREATED)
 
 
-class UpdateUserView(RetrieveUpdateAdminBrowsableMixin,APIView):
+class UpdateUserView(AdminBrowsableMixin,RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     lookup_field = "id"
     permission_classes = (permissions.IsAuthenticated)
