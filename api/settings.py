@@ -76,6 +76,7 @@ REST_FRAMEWORK = {
     #    'rest_framework.authentication.TokenAuthentication',
     'account.auth_backends.TokenAuthentication',
     ),
+    'DEFAULT_RENDERER_CLASSES':['rest_framework.renderers.JSONRenderer'],
     'DEFAULT_PAGINATION_CLASS':'shop.pagination.CustomCursorPagination',
     'PAGE_SIZE':8,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
