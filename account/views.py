@@ -64,20 +64,20 @@ class UpdateUserView(AdminBrowsableMixin,RetrieveUpdateAPIView):
 
 class UserDetails(AdminBrowsableMixin,APIView):
 
-    # permission_classe = []
+    permission_classes = []
 
-    # authentication_classes = []
+    authentication_classes = []
 
     def get(self,request,format=None):
-        user=User.objects.get(email=request.user)
-        # user=User.objects.get(id=1)
+        # user=User.objects.get(email=request.user)
+        user=User.objects.get(id=1)
         details=BuyerDetail.objects.get(buyer=user)
         serialized_details = BuyerDetailSerializer(details)
         return Response(serialized_details.data,status=status.HTTP_200_OK)
 
     def put(self,request,format=None):
-        user = User.objects.get(email=request.user)
-        # user = User.objects.get(id=1)
+        # user = User.objects.get(email=request.user)
+        user = User.objects.get(id=1)
         details = BuyerDetail.objects.get(buyer=user)
         serialized_details = BuyerDetailSerializer(instance=details,data=request.data,partial=True)
         serialized_details.is_valid(raise_exception=True)
