@@ -6,11 +6,12 @@ from rest_framework import permissions,status
 
 from .serializers import UserSerializer,BuyerDetailSerializer
 from .models import BuyerDetail
+from .browsable_mixin import AdminBrowsableMixin
 
 User = get_user_model()
 
 
-class SignInView(APIView):
+class SignInView(APIView,AdminBrowsableMixin):
 
     permission_classes = (permissions.AllowAny,)
 
@@ -39,7 +40,7 @@ class SignInView(APIView):
         return response
 
 
-class CreateUserView(APIView):
+class CreateUserView(APIView,AdminBrowsableMixin):
 
     permission_classes = (permissions.AllowAny,)
 
@@ -53,7 +54,7 @@ class CreateUserView(APIView):
         return Response({},status=status.HTTP_201_CREATED)
 
 
-class UpdateUserView(RetrieveUpdateAPIView):
+class UpdateUserView(RetrieveUpdateAPIView,AdminBrowsableMixin):
     serializer_class = UserSerializer
     lookup_field = "id"
     permission_classes = (permissions.IsAuthenticated)
@@ -61,7 +62,7 @@ class UpdateUserView(RetrieveUpdateAPIView):
 
 
 
-class UserDetails(APIView):
+class UserDetails(APIView,AdminBrowsableMixin):
 
     # permission_classe = []
 
@@ -84,7 +85,7 @@ class UserDetails(APIView):
         return Response(status=status.HTTP_205_RESET_CONTENT)
 
 
-class CurrentUser(APIView):
+class CurrentUser(APIView,AdminBrowsableMixin):
     
 
     def get(self,request,format=None):
@@ -98,7 +99,7 @@ class CurrentUser(APIView):
         return response
 
 
-class LogoutView(APIView):
+class LogoutView(APIView,AdminBrowsableMixin):
 
     def get(self,request,format=None):
         response = Response({},status=status.HTTP_200_OK)

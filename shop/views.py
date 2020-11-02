@@ -15,6 +15,7 @@ from .models import *
 from .pagination_mixin import PaginationMixin
 from .filters import ProductFilter,CartFilter,OrderFilter
 from account.serializers import UserSerializer
+from account.browsable_mixin import AdminBrowsableMixin
 
 
 User = get_user_model()
@@ -28,7 +29,7 @@ def is_admin(email):
         return False
 
 
-class ProductListCreateView(APIView,PaginationMixin):
+class ProductListCreateView(APIView,PaginationMixin,AdminBrowsableMixin):
 
     pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
@@ -55,7 +56,7 @@ class ProductListCreateView(APIView,PaginationMixin):
 
 
 
-class ProductCategoryListView(APIView,PaginationMixin):
+class ProductCategoryListView(APIView,PaginationMixin,AdminBrowsableMixin):
 
         pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
@@ -73,7 +74,7 @@ class ProductCategoryListView(APIView,PaginationMixin):
             return Response(serialized_products.data,status=status.HTTP_200_OK)
 
 
-class ProductFetchRelated(APIView):
+class ProductFetchRelated(APIView,AdminBrowsableMixin):
 
     permission_classes = []
 
@@ -88,7 +89,7 @@ class ProductFetchRelated(APIView):
 
 
 
-class ProductRetrieveView(APIView):
+class ProductRetrieveView(APIView,AdminBrowsableMixin):
 
     permission_classes = []
 
@@ -111,7 +112,7 @@ class ProductRetrieveView(APIView):
     
 
 
-class ProductUpdateDestroyView(APIView):
+class ProductUpdateDestroyView(APIView,AdminBrowsableMixin):
 
     def put(self,request,id,format=None):
         if is_admin(request.user):
@@ -128,7 +129,7 @@ class ProductUpdateDestroyView(APIView):
         return Response({},status=status.HTTP_403_FORBIDDEN)
 
 
-class DeleteProductImage(APIView):
+class DeleteProductImage(APIView,AdminBrowsableMixin):
 
     def put(self,request,id,format=None):
         raw_saved_image = "/".join(request.data["url"].split("/")[-3:])
@@ -146,7 +147,7 @@ class DeleteProductImage(APIView):
 
 
 
-class CartListCreateView(APIView,PaginationMixin):
+class CartListCreateView(APIView,PaginationMixin,AdminBrowsableMixin):
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -217,7 +218,7 @@ class CartListCreateView(APIView,PaginationMixin):
 
 
 
-class WishListCreateListView(APIView):
+class WishListCreateListView(APIView,AdminBrowsableMixin):
 
 
     def process_wishlist_product_duplicates_same_buyer(self,obj,payload):
@@ -271,7 +272,7 @@ class WishListCreateListView(APIView):
 
 
 
-class GetCartCount(APIView):
+class GetCartCount(APIView,AdminBrowsableMixin):
 
     def get(self,request,format=None):
         qty=0
@@ -283,7 +284,7 @@ class GetCartCount(APIView):
 
 
 
-class WishListCount(APIView):
+class WishListCount(APIView,AdminBrowsableMixin):
 
     def get(self,request,format=None):
         qty=0
@@ -294,7 +295,7 @@ class WishListCount(APIView):
 
 
 
-class OrderListCreateView(APIView):
+class OrderListCreateView(APIView,AdminBrowsableMixin):
 
     serializer_class = OrderSerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -308,14 +309,14 @@ class OrderListCreateView(APIView):
 
 
 
-class AllOrdersListView(ListAPIView):  #for admin
+class AllOrdersListView(ListAPIView,AdminBrowsableMixin):  #for admin
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Order.objects.all()
 
 
 
-class UploadProductImageView(APIView):
+class UploadProductImageView(APIView,AdminBrowsableMixin):
 
     parser_class = (FileUploadParser,)
 
@@ -327,7 +328,7 @@ class UploadProductImageView(APIView):
 
 
 
-class CategoriesView(ListAPIView):
+class CategoriesView(ListAPIView,AdminBrowsableMixin):
 
     permission_classes = []
 
@@ -340,7 +341,7 @@ class CategoriesView(ListAPIView):
 
 
 
-class DealsView(APIView):
+class DealsView(APIView,AdminBrowsableMixin):
 
     permission_classes = []
 
@@ -353,7 +354,7 @@ class DealsView(APIView):
 
 
 
-class ContactView(APIView):
+class ContactView(APIView,AdminBrowsableMixin):
 
     permission_classes = []
 
