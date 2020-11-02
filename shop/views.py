@@ -295,15 +295,17 @@ class WishListCount(AdminBrowsableMixin,APIView):
 
 
 
-class OrderListCreateView(AdminBrowsableMixin,APIView):
+class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
-    serializer_class = OrderSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    filterset_class = OrderFilter
 
     def get(self,request,format=None):
         q = Order.objects.all()
+        page = self.paginate_queryset(q)
         serialized_q = OrderSerializer(q,many=True)
+        if page is not None:
+            serialized_q = OrderSerializer(page,many=True)
+            return self.get_paginated_response(serialized_q.data)
         return Response(serialized_q.data,status=status.HTTP_200_OK)
 
 
