@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'debug_toolbar',
 
     'account',
     'shop'
@@ -57,8 +58,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # be placed at the top before any other middleware
     'account.middlewares.ComingSoonMiddleware',
     'account.middlewares.CurrencyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,6 +82,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE':8,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
 
 
 TOKEN_EXPIRED_AFTER_SECONDS = 43200
