@@ -97,8 +97,8 @@ class CurrentUser(AdminBrowsableMixin,APIView):
             user = User.objects.get(email=email)
             return Response({},status=status.HTTP_200_OK)
         response = Response({},status=status.HTTP_401_UNAUTHORIZED)
-        response.delete_cookie("_identity_")
-        response.delete_cookie("lvl")
+        # response.delete_cookie("_identity_")
+        # response.delete_cookie("lvl")
         return response
 
 
@@ -106,6 +106,6 @@ class LogoutView(AdminBrowsableMixin,APIView):
 
     def get(self,request,format=None):
         response = Response({},status=status.HTTP_200_OK)
-        response.delete_cookie("_identity_")
-        response.delete_cookie("lvl")
+        # response.delete_cookie("_identity_")
+        # response.delete_cookie("lvl")
         return response
