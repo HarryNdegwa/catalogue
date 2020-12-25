@@ -31,12 +31,15 @@ class SignInView(AdminBrowsableMixin,APIView):
 
         user_serialized = UserSerializer(user)
 
+        lvl = lambda u:1 if u["is_admin"] else 2
+
         response=Response({
             'user': user_serialized.data,           
+            'token': token.decode(),
+            'lvl': lvl(user_serialized)
         }, status=status.HTTP_200_OK)
-        response.set_cookie("_identity_",token.decode(),max_age=604800,httponly=True)
-        lvl = lambda u:1 if u["is_admin"] else 2
-        response.set_cookie("lvl",lvl(user_serialized),max_age=604800)
+        # response.set_cookie("_identity_",token.decode(),max_age=604800,httponly=True)
+        # response.set_cookie("lvl",lvl(user_serialized),max_age=604800)
         return response
 
 
