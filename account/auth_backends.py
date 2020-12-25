@@ -12,17 +12,20 @@ class TokenAuthentication(BaseAuthentication):
         """
             authenticate the request and return a user and token tuple    
         """
-        token = request.COOKIES.get("_identity_")
-        if token:
-            res = User.decode_auth_token(token)
-            if type(res) == int:
-                user = User.objects.get(id=res)
-                if user:
-                    return (user,None)
+        auth_header = request.headers.get("Authorization")
+        if auth_header:
+            _,token = auth_header.split(" ")
+            if token:
+                res = User.decode_auth_token(token)
+                if type(res) == int:
+                    user = User.objects.get(id=res)
+                    if user:
+                        return (user,None)
+                else:
+                    raise AuthenticationFailed(res)     
             else:
-                raise AuthenticationFailed(res)     
-        else:
-            raise AuthenticationFailed("Invalid Token")
+                raise AuthenticationFailed("Invalid Token")
+        raise AuthenticationFailed("Invalid Token")
 
     
     def get_user(self,user_id):
