@@ -73,7 +73,7 @@ class ProductSearchView(AdminBrowsableMixin,APIView,PaginationMixin):
         for i in list(sub_categories):
             s.append(i[0])
         sub_categories = s
-        search_string = request.data.get("search").lower()  
+        search_string = request.GET.get("search").lower()  
         search_str_sections = search_string.split(" ")
 
         for section in search_str_sections:
