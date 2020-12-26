@@ -9,6 +9,7 @@ from rest_framework.parsers import FileUploadParser
 from django_filters import rest_framework as filters
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 from .serializers import *
 from .models import *
@@ -61,9 +62,74 @@ class ProductSearchView(AdminBrowsableMixin,APIView):
     authentication_classes = []
 
     def get(self,request,format=None):
-        search_string = request.data
-        print(search_string)
-        return Response({},status=status.HTTP_200_OK)
+        query = None
+        category = None
+        sub_category = None
+        categories = ["laptop","laptops","phone","phones","smartphone","smartphones","accessory","accessories"]
+        sub_categories = SubCategory.objects.all().values_list("name")
+        s = []
+        for i in list(sub_categories):
+            s.append(i[0])
+        sub_categories = s
+        search_string = request.data.get("search").lower()  
+        search_str_sections = search_string.split(" ")
+
+        for section in search_str_sections:
+            if section in categories:
+                if not section.endswith("s"):
+                    section+"s"
+                if section == "phone" or section == "phones":
+                    category = "smartphones"
+                if section == "accessory":
+                    category = "accessories"
+                else:
+                    category = section
+                search_str_sections.remove(section)        
+
+        if len(search_str_sections) >= 1:
+            for section in search_str_sections:
+                if section in sub_categories:
+                    sub_category = section
+                    search_str_sections.remove(section)
+
+
+        main_query = None
+        if len(search_str_sections)==0:
+            if category and sub_category:
+                main_query = Product.objects.filter(sub_category__name__icontains=sub_category)
+            else:
+                if category: 
+                    main_query = Product.objects.filter(Q(category__name__icontains=category))
+                elif sub_category:
+                    main_query = Product.objects.filter(Q(sub_category__name__icontains=sub_category))
+        else:
+
+            if category and sub_category:
+                main_query = Product.objects.filter(sub_category__name__icontains=sub_category)
+            else:
+                if category: 
+                    main_query = Product.objects.filter(Q(category__name__icontains=category))
+                elif sub_category:
+                    main_query = Product.objects.filter(Q(sub_category__name__icontains=sub_category))
+
+            q = Q()
+
+            if len(search_str_sections) >=1:
+                for section in search_str_sections:
+                    q |= Q(name__icontains = section)
+
+                secondary_query = Product.objects.filter(q)
+
+                if main_query:
+                    main_query = main_query & secondary_query
+                else:
+                    main_query = secondary_query
+
+        serialized_products = SimpleProductSerializer(main_query,many=True)
+
+        if main_query:
+            return Response(serialized_products.data,status=status.HTTP_200_OK)
+        return Response({},status=status.HTTP_400_BAD_REQUEST)
 
 
 
