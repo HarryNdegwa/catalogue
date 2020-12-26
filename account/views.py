@@ -31,7 +31,7 @@ class SignInView(AdminBrowsableMixin,APIView):
 
         user_serialized = UserSerializer(user)
 
-        lvl = lambda u:1 if u["is_admin"] else 2
+        lvl = lambda u:1 if u["is_admin"].value else 2
 
         response=Response({
             'user': user_serialized.data,           
