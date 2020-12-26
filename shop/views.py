@@ -56,10 +56,12 @@ class ProductListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         return Response(serialized_products.data,status=status.HTTP_200_OK)
 
 
-class ProductSearchView(AdminBrowsableMixin,APIView):
+class ProductSearchView(AdminBrowsableMixin,APIView,PaginationMixin):
     permission_classes = []
 
     authentication_classes = []
+
+    pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
     def get(self,request,format=None):
         query = None
@@ -128,6 +130,10 @@ class ProductSearchView(AdminBrowsableMixin,APIView):
         serialized_products = SimpleProductSerializer(main_query,many=True)
 
         if main_query:
+            page = self.paginate_queryset(main_query)
+            if page:
+                serialized_products = SimpleProductSerializer(page,many=True)
+                return self.get_paginated_response(serialized_products.data)
             return Response(serialized_products.data,status=status.HTTP_200_OK)
         return Response({},status=status.HTTP_400_BAD_REQUEST)
 
