@@ -55,23 +55,35 @@ class ProductListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         return Response(serialized_products.data,status=status.HTTP_200_OK)
 
 
+class ProductSearchView(AdminBrowsableMixin,APIView):
+    permission_classes = []
+
+    authentication_classes = []
+
+    def get(self,request,format=None):
+        search_string = request.data
+        print(search_string)
+        return Response({},status=status.HTTP_200_OK)
+
+
+
 
 class ProductCategoryListView(AdminBrowsableMixin,APIView,PaginationMixin):
 
-        pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
+    pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
-        permission_classes = []
+    permission_classes = []
 
-        authentication_classes = []
+    authentication_classes = []
 
-        def get(self,request,category,format=None):
-            category = Category.objects.get(name=category)
-            queryset = Product.objects.filter(category=category)
-            page = self.paginate_queryset(queryset)
-            serialized_products = SimpleProductSerializer(page,many=True)
-            if page is not None:
-                return self.get_paginated_response(serialized_products.data)
-            return Response(serialized_products.data,status=status.HTTP_200_OK)
+    def get(self,request,category,format=None):
+        category = Category.objects.get(name=category)
+        queryset = Product.objects.filter(category=category)
+        page = self.paginate_queryset(queryset)
+        serialized_products = SimpleProductSerializer(page,many=True)
+        if page is not None:
+            return self.get_paginated_response(serialized_products.data)
+        return Response(serialized_products.data,status=status.HTTP_200_OK)
 
 
 class ProductFetchRelated(AdminBrowsableMixin,APIView):
@@ -368,6 +380,9 @@ class ContactView(AdminBrowsableMixin,APIView):
         serialized_contact.is_valid(raise_exception=True)
         serialized_contact.save()
         return Response({},status=status.HTTP_200_OK)
+
+
+
 
 
 
