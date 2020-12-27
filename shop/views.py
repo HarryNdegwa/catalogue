@@ -129,7 +129,9 @@ class ProductSearchView(AdminBrowsableMixin,APIView,PaginationMixin):
 
         serialized_products = SimpleProductSerializer(main_query,many=True)
 
-        if main_query:
+        if main_query is not None:
+            if len(main_query) == 0:
+                return Response({},status=status.HTTP_200_OK)
             page = self.paginate_queryset(main_query)
             if page:
                 serialized_products = SimpleProductSerializer(page,many=True)
