@@ -16,6 +16,10 @@ from datetime import timedelta
 from corsheaders.defaults import default_headers
 
 
+with open("key.txt","r") as file:
+    key = file.read().strip()
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "x8o80zw%bigof*^s8g3(k=q2x5s=czk8e4$k2qi1v=wt+%xgq="
+SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
