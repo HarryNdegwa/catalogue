@@ -15,6 +15,7 @@ import os
 from datetime import timedelta
 from corsheaders.defaults import default_headers
 
+
 with open("key.txt","r") as file:
     key = file.read().strip()
 

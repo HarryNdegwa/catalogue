@@ -15,8 +15,6 @@ import os
 from datetime import timedelta
 from corsheaders.defaults import default_headers
 
-print(os.environ.get("DJANGO_SETTINGS_MODULE"))
-
 
 with open("key.txt","r") as file:
     key = file.read().strip()
