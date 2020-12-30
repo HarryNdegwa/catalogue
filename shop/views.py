@@ -481,8 +481,11 @@ class ListReviewsView(AdminBrowsableMixin,APIView):
 
 
     def get(self,request,format=None):
-        print(request.data)
-        return Response({},status=status.HTTP_200_OK)
+        reviews = Review.objects.filter(product=Product.objects.get(id=request.data.get("id")))
+        if reviews:
+            serialized_reviews = ReviewSerializer(reviews,many=True)
+            return Response(serialized_reviews.data,status=status.HTTP_200_OK)
+        return Response({},status=status.HTTP_400_BAD_REQUEST)
 
 
 
