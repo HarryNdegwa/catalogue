@@ -457,6 +457,20 @@ class ContactView(AdminBrowsableMixin,APIView):
 
 
 
+class ReviewCreateView(AdminBrowsableMixin,APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self,request,format=None):
+        review_payload = request.data
+        serialized_review = ReviewSerializer(data=review_payload)
+        user_id = request.user.id
+        print(user_id)
+        serialized_review.is_valid(raise_exception=True)
+        serialized_review.save()
+        return Response({},status=status.HTTP_201_CREATED)
+
+
 
 
 
