@@ -473,6 +473,19 @@ class ReviewCreateView(AdminBrowsableMixin,APIView):
 
 
 
+class ListReviewsView(AdminBrowsableMixin,APIView):
+
+    permission_classes = []
+
+    authentication_classes = []
+
+
+    def get(self,request,format=None):
+        print(request.data)
+        return Response({},status=status.HTTP_200_OK)
+
+
+
 
 
 
