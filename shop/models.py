@@ -131,13 +131,15 @@ class Contact(models.Model):
         return str(self.name)
 
 
-        
+
 
 class Review(models.Model):
     reviewer = models.ForeignKey(User,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     content = models.TextField()
     stars = models.IntegerField(default=0)
+    published = models.BooleanField(default=False)
+    timestamp = models.DateField(auto_now_add=True)
 
 
     def __str__(self):
