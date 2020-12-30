@@ -156,6 +156,16 @@ class ContactSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+
+    reviewer = UserSerializer()
+    product = SimpleProductSerializer()
+
+    class Meta:
+        model = Review
+        fields = "__all__"
+
+
 
 
 
