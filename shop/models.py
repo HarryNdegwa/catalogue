@@ -129,4 +129,21 @@ class Contact(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+        
+
+class Review(models.Model):
+    reviewer = models.ForeignKey(User,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    content = models.TextField()
+    stars = models.IntegerField(default=0)
+
+
+    def __str__(self):
+        return self.content
+
+
+
+
     
