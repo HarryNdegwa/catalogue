@@ -463,9 +463,10 @@ class ReviewCreateView(AdminBrowsableMixin,APIView):
 
     def post(self,request,format=None):
         review_payload = request.data
-        serialized_review = ReviewSerializer(data=review_payload)
-        user_id = request.user.id
-        print(user_id)
+        review_payload["reviewer"] = {"password":request.user.password}
+        product = Product.objects.get(id=review_payload.get("product"))
+        review_payload["product"] = dict(SimpleProductSerializer(product).data)
+        serialized_review = ReviewSerializer(data=review_payload)       
         serialized_review.is_valid(raise_exception=True)
         serialized_review.save()
         return Response({},status=status.HTTP_201_CREATED)

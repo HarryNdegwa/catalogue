@@ -166,6 +166,15 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+    def create(self,validated_data):
+        user_data = validated_data.pop("reviewer")
+        user = User.objects.get(password=user_data.get("password"))
+        product_data = validated_data.pop("product")
+        product = Product.objects.get(slug=dict(product_data).get("slug"))
+        review = Review.objects.create(reviewer=user,product=product,**validated_data)
+        return review
+
+
 
 
 
