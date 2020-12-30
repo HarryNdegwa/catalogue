@@ -479,7 +479,6 @@ class ListReviewsView(AdminBrowsableMixin,APIView):
 
     authentication_classes = []
 
-
     def get(self,request,format=None):
         reviews = Review.objects.filter(product=Product.objects.get(id=request.data.get("id")))
         if reviews:
