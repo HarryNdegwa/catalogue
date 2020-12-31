@@ -480,7 +480,8 @@ class ListReviewsView(AdminBrowsableMixin,APIView):
     authentication_classes = []
 
     def get(self,request,format=None):
-        reviews = Review.objects.filter(product=Product.objects.get(id=request.data.get("id"))).exclude(published=False)
+        product_id = int(dict(request.GET).get("id")[0])
+        reviews = Review.objects.filter(product=Product.objects.get(id=product_id)).exclude(published=False)
         if reviews is not None:
             serialized_reviews = ReviewSerializer(reviews,many=True)
             return Response(serialized_reviews.data,status=status.HTTP_200_OK)
