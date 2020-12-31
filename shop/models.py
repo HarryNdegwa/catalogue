@@ -66,6 +66,7 @@ class Cart(models.Model):
     quantity = models.IntegerField(default=0)
     total_price = models.IntegerField(default=0)
     product_image_url = models.CharField(max_length=200,null=True)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.buyer.email
