@@ -274,7 +274,7 @@ class CartListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
     def get(self,request,format=None):
         user = User.objects.get(email=request.user)
-        cart_items = Cart.objects.filter(buyer=user)
+        cart_items = Cart.objects.filter(buyer=user).exclude(ordered=True)
         serialized_items = CartSerializer(cart_items,many=True)
         return Response(serialized_items.data,status=status.HTTP_200_OK)
 
