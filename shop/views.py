@@ -243,7 +243,7 @@ class CartListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         product = Product.objects.get(id=payload["product"]["id"])
         cart = Cart.objects.filter(buyer=buyer,product=product).exclude(ordered=True)
         if cart.exists():
-            cart = Cart.objects.get(buyer=buyer,product=product)
+            cart = Cart.objects.get(buyer=buyer,product=product).exclude(ordered=True)
             cart.quantity = int(cart.quantity)+int(qty)
             cart.save()
         else:
