@@ -395,6 +395,12 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         return Response(serialized_q.data,status=status.HTTP_200_OK)
 
 
+    def post(self,request,format=None):
+        data = request.data
+        print(data)
+        return Response({},status=status.HTTP_201_CREATED)
+
+
 
 
 class AllOrdersListView(AdminBrowsableMixin,ListAPIView):  #for admin
