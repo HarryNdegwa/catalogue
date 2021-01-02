@@ -241,7 +241,7 @@ class CartListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
     def process_cart_product_duplicates_same_buyer(self,obj,payload,qty):
         buyer = User.objects.get(id=payload["buyer"]["id"])
         product = Product.objects.get(id=payload["product"]["id"])
-        cart = Cart.objects.filter(buyer=buyer,product=product)
+        cart = Cart.objects.filter(buyer=buyer,product=product).exclude(ordered=True)
         if cart.exists():
             cart = Cart.objects.get(buyer=buyer,product=product)
             cart.quantity = int(cart.quantity)+int(qty)
