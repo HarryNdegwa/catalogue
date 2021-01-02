@@ -83,7 +83,6 @@ class Cart(models.Model):
 
 
 class Order(models.Model):
-    cart_id=models.IntegerField(null=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE)
     currency=models.CharField(max_length=5,null=True)
     currency_value=models.IntegerField(null=True)
