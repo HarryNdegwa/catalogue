@@ -364,7 +364,7 @@ class GetCartCount(AdminBrowsableMixin,APIView):
     def get(self,request,format=None):
         qty=0
         user = User.objects.get(email=request.user)
-        cart_items = Cart.objects.filter(buyer=user)
+        cart_items = Cart.objects.filter(buyer=user).exclude(ordered=True)
         for item in cart_items:
             qty+=item.quantity
         return Response({"count":qty},status=status.HTTP_200_OK)
@@ -405,8 +405,7 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         products = self.stringify_cart(owner)
         currency_value = c()[currency] # base KSH
         order = Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method)
-        print(order.id)
-        return Response({},status=status.HTTP_201_CREATED)
+        return Response({"id":order.id},status=status.HTTP_201_CREATED)
 
     
     def process_order_price(self,cart_item):
