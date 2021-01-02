@@ -85,7 +85,7 @@ class Cart(models.Model):
 class Order(models.Model):
     owner=models.ForeignKey(User,on_delete=models.CASCADE)
     currency=models.CharField(max_length=5,null=True)
-    currency_value=models.IntegerField(null=True)
+    currency_value=models.DecimalField(max_digits=10,decimal_places=6)
     products=models.TextField()
     payment_method=models.CharField(max_length=100,null=True)
     timestamp=models.DateTimeField(auto_now_add=True)
