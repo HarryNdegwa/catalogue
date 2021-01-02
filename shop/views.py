@@ -396,8 +396,10 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
 
     def post(self,request,format=None):
-        data = request.data
-        print(data)
+        payment_method = request.data.get("method")
+        if not payment_method:            
+            return Response({},status=status.HTTP_400_BAD_REQUEST)
+        
         return Response({},status=status.HTTP_201_CREATED)
 
 
