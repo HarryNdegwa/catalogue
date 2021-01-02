@@ -3,12 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Maintenance
+from .currency import currencies as c
 
-
-currencies = {
-    "KSH":1,
-    "USD":0.00925
-}
+currencies = c()
 
 
 class ComingSoonMiddleware(object):
