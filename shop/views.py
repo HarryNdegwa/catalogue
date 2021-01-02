@@ -404,7 +404,8 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         owner = request.user
         products = self.stringify_cart(owner)
         currency_value = c()[currency] # base KSH
-        Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method)
+        order = Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method)
+        print(order.id)
         return Response({},status=status.HTTP_201_CREATED)
 
     
