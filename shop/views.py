@@ -17,6 +17,7 @@ from .pagination_mixin import PaginationMixin
 from .filters import ProductFilter,CartFilter,OrderFilter
 from account.serializers import UserSerializer
 from account.browsable_mixin import AdminBrowsableMixin
+from account.currency import currencies as c
 
 
 User = get_user_model()
@@ -397,10 +398,42 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
     def post(self,request,format=None):
         payment_method = request.data.get("method")
+        currency = request.data.get("currency")
         if not payment_method:            
             return Response({},status=status.HTTP_400_BAD_REQUEST)
-        
+        owner = request.user
+        products = self.stringify_cart(owner)
+        currency_value = c()[currency] # base KSH
+        Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method)
         return Response({},status=status.HTTP_201_CREATED)
+
+    
+    def process_order_price(self,cart_item):
+        if cart_item.product.hot_deal:
+            return cart_item.product.deal_price
+        return cart_item.product.price
+
+
+    def stringify_cart(self,user):
+        cart_items = Cart.objects.filter(buyer=user).exclude(ordered=True)
+        output = []
+        for cart in list(cart_items):
+            raw_item = {}
+            raw_item["product_name"] = cart.product.name
+            raw_item["product_price"] = self.process_order_price(cart)
+            raw_item["product_image_url"] = cart.product_image_url
+            raw_item["quantity"] = cart.quantity
+            raw_item["total_price"] = cart.total_price
+            raw_item["cart_id"] = cart.id
+            output.append(raw_item)
+
+        for cart in cart_items:
+            cart.ordered = True
+
+        Cart.objects.bulk_update(cart_items,["ordered"])
+
+        return json.dumps(output)
+
 
 
 
