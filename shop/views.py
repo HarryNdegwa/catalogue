@@ -404,6 +404,7 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
             return Response({},status=status.HTTP_400_BAD_REQUEST)
         owner = request.user
         products = self.stringify_cart(owner)
+        amount = self.get_total_amount(products)
         currency_value = c()[currency] # base KSH
         order = Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method)
         return Response({"id":order.id},status=status.HTTP_201_CREATED)
@@ -434,6 +435,16 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         Cart.objects.bulk_update(cart_items,["ordered"])
 
         return json.dumps(output)
+
+
+    def get_total_amount(self,products):
+        products = json.loads(products)
+        print(products)
+        total=0
+        for product in products:
+            total+=product.total_price
+        return total
+
 
 
 
