@@ -440,6 +440,13 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         return total
 
 
+class OrderDetailsView(AdminBrowsableMixin,APIView):
+
+    def get(self,request,id,format=None):
+        print(id)
+        return Response({},status=status.HTTP_200_OK)
+
+
 
 
 

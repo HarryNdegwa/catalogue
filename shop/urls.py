@@ -17,6 +17,7 @@ urlpatterns = [
     path("cart/<int:id>/",CartListCreateView.as_view(),name="cart_delete"),
     path("cart/count/",GetCartCount.as_view(),name="cart_count"),
     path("orders/",OrderListCreateView.as_view(),name="orders"),
+    path("order/<int:id>/",OrderDetailsView.as_view(),name="order"),
     path("all-orders/",AllOrdersListView.as_view(),name="all_orders"),
     path("upload/",UploadProductImageView.as_view(),name="upload_product_image"),
     path("categories/",CategoriesView.as_view(),name="categories"),
