@@ -398,29 +398,29 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         if not payment_method:            
             return Response({},status=status.HTTP_400_BAD_REQUEST)
         owner = request.user
-        products = self.stringify_cart(owner)
+        products = self.stringify_cart(owner,c()[currency])
         amount = self.get_total_amount(products)
         currency_value = c()[currency] # base KSH
         order = Order.objects.create(owner=owner,currency=currency,currency_value=currency_value,products=products,payment_method=payment_method,amount=amount)
         return Response({"id":order.id},status=status.HTTP_201_CREATED)
 
     
-    def process_order_price(self,cart_item):
+    def process_product_price(self,cart_item,currency_value):
         if cart_item.product.hot_deal:
-            return cart_item.product.deal_price
-        return cart_item.product.price
+            return round(cart_item.product.deal_price*currency_value)
+        return round(cart_item.product.price*currency_value)
 
 
-    def stringify_cart(self,user):
+    def stringify_cart(self,user,currency_value):
         cart_items = Cart.objects.filter(buyer=user).exclude(ordered=True)
         output = []
         for cart in list(cart_items):
             raw_item = {}
             raw_item["product_name"] = cart.product.name
-            raw_item["product_price"] = self.process_order_price(cart)
+            raw_item["product_price"] = self.process_product_price(cart,currency_value)
             raw_item["product_image_url"] = cart.product_image_url
             raw_item["quantity"] = cart.quantity
-            raw_item["total_price"] = cart.total_price
+            raw_item["total_price"] = self.process_product_price(cart,currency_value)*cart.quantity
             raw_item["cart_id"] = cart.id
             output.append(raw_item)
 
@@ -428,6 +428,8 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
             cart.ordered = True
 
         Cart.objects.bulk_update(cart_items,["ordered"])
+
+        print(output)
 
         return json.dumps(output)
 
