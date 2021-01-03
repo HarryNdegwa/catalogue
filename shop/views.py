@@ -429,8 +429,6 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 
         Cart.objects.bulk_update(cart_items,["ordered"])
 
-        print(output)
-
         return json.dumps(output)
 
 
