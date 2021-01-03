@@ -443,8 +443,14 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
 class OrderDetailsView(AdminBrowsableMixin,APIView):
 
     def get(self,request,id,format=None):
-        print(id)
-        return Response({},status=status.HTTP_200_OK)
+        order = Order.objects.get(id=id)
+        if not order:
+            return Response({},status=status.HTTP_404_NOT_FOUND)
+        serialized_order = OrderSerializer(order)
+        raw_order = dict(serialized_order.data)
+        products = raw_order.pop("products")
+        raw_order["products"] = json.loads(products)
+        return Response(raw_order,status=status.HTTP_200_OK)
 
 
 
