@@ -389,7 +389,7 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
     def get(self,request,format=None):
         q = Order.objects.filter(owner=request.user)
         # page = self.paginate_queryset(q)
-        serialized_q = OrderSerializer(q,many=True)
+        serialized_q = SimpleOrderSerializer(q,many=True)
         # if page is not None:
         #     serialized_q = OrderSerializer(page,many=True)
         #     return self.get_paginated_response(serialized_q.data)

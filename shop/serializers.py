@@ -136,7 +136,14 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Order
-        fields="__all__"
+        exclude=["owner"]
+
+
+class SimpleOrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=Order
+        fields=["id","timestamp"]
 
 
 
