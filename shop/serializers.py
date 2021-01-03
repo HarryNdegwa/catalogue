@@ -143,7 +143,7 @@ class SimpleOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Order
-        fields=["id","timestamp"]
+        fields=["id","timestamp","currency"]
 
 
 
