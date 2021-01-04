@@ -67,20 +67,16 @@ class UpdateUserView(AdminBrowsableMixin,RetrieveUpdateAPIView):
 
 class UserDetails(AdminBrowsableMixin,APIView):
 
-    permission_classes = []
-
-    authentication_classes = []
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self,request,format=None):
-        # user=User.objects.get(email=request.user)
-        user=User.objects.get(id=1)
+        user=request.user
         details=BuyerDetail.objects.get(buyer=user)
         serialized_details = BuyerDetailSerializer(details)
         return Response(serialized_details.data,status=status.HTTP_200_OK)
 
     def put(self,request,format=None):
-        # user = User.objects.get(email=request.user)
-        user = User.objects.get(id=1)
+        user = request.user
         details = BuyerDetail.objects.get(buyer=user)
         serialized_details = BuyerDetailSerializer(instance=details,data=request.data,partial=True)
         serialized_details.is_valid(raise_exception=True)
@@ -97,8 +93,6 @@ class CurrentUser(AdminBrowsableMixin,APIView):
             user = User.objects.get(email=email)
             return Response({},status=status.HTTP_200_OK)
         response = Response({},status=status.HTTP_401_UNAUTHORIZED)
-        # response.delete_cookie("_identity_")
-        # response.delete_cookie("lvl")
         return response
 
 
@@ -106,6 +100,4 @@ class LogoutView(AdminBrowsableMixin,APIView):
 
     def get(self,request,format=None):
         response = Response({},status=status.HTTP_200_OK)
-        # response.delete_cookie("_identity_")
-        # response.delete_cookie("lvl")
         return response
