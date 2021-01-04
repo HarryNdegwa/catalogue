@@ -89,7 +89,7 @@ class SimpleProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Product
-        fields=["id","name","price","prev_price","category","hot_deal","deal_price","img_urls","slug"]
+        fields=["id","name","price","prev_price","category","hot_deal","deal_price","img_urls","slug","reviews","sold"]
 
 
 
