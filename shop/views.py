@@ -416,6 +416,7 @@ class OrderListCreateView(AdminBrowsableMixin,APIView,PaginationMixin):
         output = []
         for cart in list(cart_items):
             raw_item = {}
+            raw_item["product_id"] = cart.product.id
             raw_item["product_name"] = cart.product.name
             raw_item["product_price"] = self.process_product_price(cart,currency_value)
             raw_item["product_image_url"] = cart.product_image_url
@@ -541,7 +542,7 @@ class ListReviewsView(AdminBrowsableMixin,APIView):
 
     def get(self,request,format=None):
         product_id = int(dict(request.GET).get("id")[0])
-        reviews = Review.objects.filter(product=Product.objects.get(id=product_id)).exclude(published=False)
+        reviews = Review.objects.filter(product=Product.objects.get(id=product_id))
         if reviews is not None:
             serialized_reviews = ReviewSerializer(reviews,many=True)
             return Response(serialized_reviews.data,status=status.HTTP_200_OK)
