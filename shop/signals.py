@@ -2,7 +2,7 @@ from django.db.models import F
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import ProductImage,Product
+from .models import ProductImage,Product,Review
 
 @receiver(post_save,sender=ProductImage)
 def save_img_url(sender,instance,created=False,**kwargs):
@@ -15,3 +15,11 @@ def save_img_url(sender,instance,created=False,**kwargs):
         else:
             s = img_url
         product.update(img_urls = s)
+
+
+@receiver(post_save,sender=Review)
+def update_product_reviews(sender,instance,created=False,**kwargs):
+    if created:
+        product = Product.objects.filter(id=instance.product.id)
+        count_ = product[0].reviews+1
+        product.update(reviews=count_)
