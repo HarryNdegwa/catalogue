@@ -1,0 +1,54 @@
+.admin-header {
+  background-color: #15151d;
+  height: 80px;
+  color: #fff;
+  border-bottom: 3px solid #d31c27;
+}
+
+.admin-header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header-inner .custom-white-link {
+  flex: 5;
+}
+
+.admin-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.admin-menu a {
+  color: #fff;
+}
+
+.admin-menu a:hover {
+  text-decoration: none;
+  color: #d31c27;
+}
+
+.admin-logout {
+  cursor: pointer;
+}
+
+.admin-logout:hover {
+  color: #d31c27;
+}
+
+@media screen and (max-width: 600px) {
+  .admin-menu {
+    flex: 2;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .admin-menu {
+    flex: 3;
+  }
+}

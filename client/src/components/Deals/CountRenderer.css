@@ -1,0 +1,9 @@
+.count-wrapper {
+  display: flex;
+  color: #d31c27 !important;
+  font-weight: bold !important;
+}
+
+.count-wrapper div {
+  margin: 3px;
+}

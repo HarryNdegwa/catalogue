@@ -1,0 +1,77 @@
+.admin-product-wrapper {
+  height: 120px;
+  align-items: center !important;
+  width: 100%;
+}
+
+.x-all {
+  display: none;
+}
+
+.activity-tooltip {
+  position: relative;
+}
+
+.activity-tooltip:hover {
+  color: #d31c27 !important;
+}
+
+.activity-edit-link {
+  color: #000;
+}
+
+.activity-edit-link:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.activity-tooltip-text {
+  visibility: hidden;
+  width: 80px;
+  background-color: #fff;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  height: 50px;
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  right: calc(100% + 5px);
+  color: #000 !important;
+  text-align: left;
+  padding: 0px 0px 0px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0px 0px 40px 3px rgba(0, 0, 0, 0.3);
+  /* padding: 10px; */
+}
+
+.activity-tooltip:hover .activity-tooltip-text {
+  visibility: visible;
+}
+
+.activity-tooltip-text::after {
+  content: " ";
+  position: absolute;
+  top: 25%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #d31c27;
+}
+
+.activity-deal {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .y-all {
+    display: none;
+  }
+
+  .x-all {
+    display: flex;
+  }
+}

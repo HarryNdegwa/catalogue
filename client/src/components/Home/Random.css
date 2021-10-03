@@ -1,0 +1,43 @@
+.random {
+  width: 31%;
+  height: var(--random-height);
+}
+
+.inner-random {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner-random-text {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  padding: 10px 0px 0px 10px;
+}
+
+.triangle-topleft {
+  width: 0;
+  height: 0;
+  border-top: 220px solid #d31c27;
+  border-right: 200px solid transparent;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+@media screen and (max-width: 900px) {
+  .random {
+    height: var(--random-height);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .random {
+    height: var(--random-height);
+  }
+}

@@ -1,0 +1,29 @@
+.reviews-modal-body {
+  min-height: 250px;
+}
+
+.reviews {
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.reviews::-webkit-scrollbar {
+  width: 4px;
+}
+
+.reviews::-webkit-scrollbar-thumb {
+  background-color: #d31c27;
+}
+
+.reviews-spinner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d31c27 !important;
+  background-color: white;
+}

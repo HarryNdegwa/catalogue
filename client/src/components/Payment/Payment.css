@@ -1,0 +1,20 @@
+.grey {
+  color: grey;
+}
+
+.payment-spinner {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh !important;
+  width: 100vw !important;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-spinner span {
+  color: #d31c27;
+}

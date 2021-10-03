@@ -1,0 +1,9 @@
+.edit-image {
+  position: relative;
+}
+
+.edit-trash {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}

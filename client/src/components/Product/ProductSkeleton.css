@@ -1,0 +1,61 @@
+.product-skeleton {
+  width: 100%;
+  height: var(--product-card-height);
+}
+
+.product-skeleton:empty::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 10px 45px rgba(0, 0, 0, 0.1); */
+  background-image: -webkit-gradient(
+      radial,
+      left bottom,
+      right bottom,
+      color-stop(0, rgba(255, 255, 255, 0)),
+      color-stop(100%, rgba(255, 255, 255, 0.8)),
+      to(rgba(255, 255, 255, 0))
+    ),
+    var(--product-image-skeleton), var(--product-name-skeleton),
+    var(--product-price-skeleton), var(--product-secondary-skeleton),
+    var(--product-card-skeleton);
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    var(--product-image-skeleton), var(--product-name-skeleton),
+    var(--product-price-skeleton), var(--product-secondary-skeleton),
+    var(--product-card-skeleton);
+
+  background-size: var(--blur-size),
+    var(--product-image-width) var(--product-image-height),
+    var(--product-name-width) var(--product-name-height),
+    var(--product-price-width) var(--product-price-height),
+    var(--product-secondary-width) var(--product-secondary-height), 100% 100%;
+  background-position: -150% 0, var(--product-image-position),
+    var(--product-name-position), var(--product-price-position),
+    var(--product-secondary-position), 0 0;
+  background-repeat: no-repeat;
+  -webkit-animation: product-loading 1.2s infinite;
+  animation: product-loading 1.2s infinite;
+}
+
+@-webkit-keyframes product-loading {
+  to {
+    background-position: 350% 0, var(--product-image-position),
+      var(--product-name-position), var(--product-price-position),
+      var(--product-secondary-position), 0 0;
+  }
+}
+
+@keyframes product-loading {
+  to {
+    background-position: 350% 0, var(--product-image-position),
+      var(--product-name-position), var(--product-price-position),
+      var(--product-secondary-position), 0 0;
+  }
+}

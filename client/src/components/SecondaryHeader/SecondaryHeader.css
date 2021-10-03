@@ -1,0 +1,41 @@
+.secondary-header {
+  border-bottom: 2px solid #d4d4d4;
+  height: 40px;
+}
+
+.secondary-header-menu {
+  list-style: none;
+  height: 100%;
+  margin: 0px;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.secondary-header-menu::-webkit-scrollbar {
+  height: 0px;
+}
+
+.secondary-header-menu li {
+  margin: 0px 10px;
+}
+
+.secondary-header-menu li:first-child {
+  margin-left: 0px;
+}
+
+.secondary-header-menu li a {
+  text-transform: capitalize;
+  font-weight: bolder;
+  color: #000;
+  white-space: nowrap;
+}
+
+.secondary-header-menu li a:hover {
+  color: #d31c27;
+  text-decoration: none;
+}
+
+.secondary-active {
+  color: #d31c27 !important;
+  border-bottom: 2px solid #d31c27;
+}

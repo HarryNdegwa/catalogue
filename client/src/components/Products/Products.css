@@ -1,0 +1,11 @@
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.pagination-controller:hover {
+  color: #d31c27;
+  cursor: pointer;
+}

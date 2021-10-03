@@ -1,0 +1,28 @@
+.count-down-wrapper {
+  text-decoration: none;
+  color: #000;
+  max-height: 100px;
+}
+
+.count-down-wrapper div {
+  display: inline-block;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50%;
+  background-color: #d31c27;
+  margin: 0px 10px;
+  color: #fff;
+}
+
+.count-down-wrapper div span {
+  /* width: 100%;
+  height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center !important;
+}
+
+.count-down-wrapper div span span {
+  white-space: nowrap;
+}

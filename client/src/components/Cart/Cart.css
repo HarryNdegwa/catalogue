@@ -1,0 +1,38 @@
+.y-cart {
+  height: var(--cart-item-md-height);
+}
+
+.x-cart {
+  display: none;
+}
+
+.cart-qty-btn {
+  border: none;
+}
+
+.cart-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+.cart-trash:hover {
+  color: #d31c27;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .y-cart {
+    display: none;
+  }
+
+  .y-cart-head {
+    display: none;
+  }
+
+  .x-cart {
+    display: flex;
+    height: var(--cart-item-sm-height);
+  }
+}

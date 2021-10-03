@@ -1,0 +1,27 @@
+.order-more-details {
+  color: #d31c27;
+  text-decoration: none;
+}
+
+.order-more-details:hover {
+  text-decoration: none;
+  color: #d31c27;
+}
+
+.j {
+  display: none;
+}
+
+.order-id,
+.order-date,
+.order-amount {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px;
+}
+
+@media screen and (max-width: 767px) {
+  .j {
+    display: block;
+  }
+}

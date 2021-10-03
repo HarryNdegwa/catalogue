@@ -1,0 +1,13 @@
+.deal-form label {
+  font-size: 12px;
+}
+
+.deal-form input {
+  border: 1px solid #d4d4d4;
+}
+
+.deal-form input:focus {
+  box-shadow: none;
+  outline: none;
+  border: 1px solid #d4d4d4;
+}

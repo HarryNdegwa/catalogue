@@ -1,0 +1,155 @@
+.top-header {
+  background-color: #1d2029;
+  height: 30px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.top-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-header-inner p {
+  cursor: pointer;
+}
+
+.top-header-contact {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.top-header-account {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.account-tooltip,
+.currency-tooltip {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+}
+
+.account-public-content,
+.currency-public-content {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.account-tooltip-content,
+.currency-tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  width: 150px;
+  background-color: white;
+  color: #000;
+  z-index: 3;
+  border-radius: 4px;
+  left: 50%;
+  margin-left: -75px;
+  top: 100%;
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.3);
+}
+
+.currency-tooltip-content {
+  width: 50px;
+  margin-left: -25px;
+}
+
+.currency-tooltip-content p {
+  font-weight: 600;
+  padding: 5px 0px 5px 5px;
+}
+
+.currency-tooltip {
+  padding: 0px 20px;
+}
+
+.currency-tooltip-content p:hover {
+  color: #d31c27;
+}
+
+.account-tooltip-content p {
+  padding: 5px 10px;
+}
+
+.account-tooltip-content p:hover {
+  background-color: #eaecee;
+}
+
+.account-tooltip-link p:hover {
+  color: #d31c27 !important;
+}
+
+.account-tooltip-content::after,
+.currency-tooltip-content::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+.currency-tooltip:hover .currency-tooltip-content {
+  visibility: visible;
+}
+
+.account-tooltip:hover .account-tooltip-content {
+  visibility: visible;
+}
+
+.account-tooltip-link {
+  color: #000;
+  font-weight: 600;
+}
+
+.account-tooltip-link:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .account-tooltip-content {
+    width: 150px;
+    left: -40px !important;
+    margin-left: -45px !important;
+  }
+
+  .account-tooltip-content::after {
+    left: 90%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .top-header-contact {
+    display: none;
+  }
+
+  .currency-tooltip {
+    padding: 0px 5px;
+  }
+
+  .top-header-account {
+    justify-content: space-between;
+  }
+
+  .account-public-content {
+    font-weight: bolder;
+    margin-right: 10px;
+  }
+}

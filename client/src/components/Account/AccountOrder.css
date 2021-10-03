@@ -1,0 +1,17 @@
+.account-content-wrapper {
+  border-left: 1px solid #d4d4d4;
+  flex: 1 0 auto;
+}
+
+.order-data {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 767) {
+  .account-content-wrapper {
+    border: none;
+  }
+}
